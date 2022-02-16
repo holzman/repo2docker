@@ -405,6 +405,17 @@ class Repo2Docker(Application):
         config=True,
     )
 
+    base_image_registry = Unicode(
+        "",
+        help="""
+        Image registry where base images are hosted when doing environment.yml based builds.
+
+        Blank if not set (using the system default for image registry).
+        """,
+        config=True,
+    )
+
+
     engine = Unicode(
         "docker",
         config=True,
@@ -779,6 +790,11 @@ class Repo2Docker(Application):
                 }
                 if self.target_repo_dir:
                     build_args["REPO_DIR"] = self.target_repo_dir
+
+                if self.base_image_registry:
+                    build_args["BASE_IMAGE_REGISTRY"] = self.base_image_registry
+                    if self.base_image_registry[-1] != '/':
+                        build_args["BASE_IMAGE_REGISTRY"] += '/'
                 build_args.update(self.extra_build_args)
 
                 if self.dry_run:

@@ -216,6 +216,8 @@ def get_argparser():
 
     argparser.add_argument("--target-repo-dir", help=Repo2Docker.target_repo_dir.help)
 
+    argparser.add_argument("--base-image-registry", help=Repo2Docker.base_image_registry.help)
+
     argparser.add_argument("--appendix", type=str, help=Repo2Docker.appendix.help)
 
     argparser.add_argument(
@@ -407,6 +409,9 @@ def make_r2d(argv=None):
 
     if args.target_repo_dir:
         r2d.target_repo_dir = args.target_repo_dir
+
+    if args.base_image_registry:
+        r2d.base_image_registry = args.base_image_registry
 
     return r2d
 
